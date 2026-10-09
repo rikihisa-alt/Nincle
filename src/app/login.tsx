@@ -122,7 +122,7 @@ export default function LoginScreen() {
 
 const styles = StyleSheet.create({
   brand: { paddingTop: Space.xl * 2, paddingBottom: Space.xl, alignItems: 'center' },
-  logo: { fontSize: 44, fontWeight: '900', letterSpacing: 4 },
+  logo: { fontSize: 40, fontWeight: '900', letterSpacing: 2 },
   tagline: { fontSize: 16, fontWeight: '700', marginTop: Space.s },
   line: { marginTop: Space.l, opacity: 0.6 },
   or: { textAlign: 'center', fontSize: 15, fontWeight: '700', marginTop: Space.xl },

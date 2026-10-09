@@ -339,7 +339,7 @@ const styles = StyleSheet.create({
   previewBox: { width: 110 },
   previewNum: { fontSize: 36, fontWeight: '900', fontVariant: ['tabular-nums'] },
   help: { fontSize: 15, fontWeight: '700', textAlign: 'center' },
-  done: { flexDirection: 'row', alignItems: 'center', gap: Space.s, borderWidth: 2, borderRadius: 8, padding: Space.m },
+  done: { flexDirection: 'row', alignItems: 'center', gap: Space.s, borderWidth: 1, borderRadius: 8, padding: Space.m },
   doneText: { fontSize: 16, fontWeight: '800' },
   quick: { gap: Space.s, marginTop: Space.xs },
   quickLabel: { fontSize: 15, fontWeight: '800' },

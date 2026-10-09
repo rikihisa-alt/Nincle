@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
   header: { paddingTop: Space.l, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: Space.s },
   title: { fontSize: 30, fontWeight: '900' },
   mt: { marginTop: Space.l },
-  search: { marginTop: Space.m, flexDirection: 'row', alignItems: 'center', gap: Space.s, borderWidth: 2, borderRadius: 10, paddingHorizontal: Space.m },
+  search: { marginTop: Space.m, flexDirection: 'row', alignItems: 'center', gap: Space.s, borderWidth: 1, borderRadius: 10, paddingHorizontal: Space.m },
   searchInput: { flex: 1, minHeight: MinTap },
   list: { gap: Space.s, marginTop: Space.l },
   row: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: Space.s },

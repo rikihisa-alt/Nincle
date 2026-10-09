@@ -220,7 +220,7 @@ export function DatePickerModal({
 
 const styles = StyleSheet.create({
   header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: Space.s },
-  navBtn: { width: MinTap, height: 48, borderRadius: 10, borderWidth: 2, alignItems: 'center', justifyContent: 'center' },
+  navBtn: { width: MinTap, height: 48, borderRadius: 10, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
   month: { fontSize: 22, fontWeight: '900' },
   todayLink: { alignSelf: 'center', paddingVertical: 6, paddingHorizontal: Space.m, marginBottom: Space.xs },
   todayLinkText: { fontSize: 15, fontWeight: '800', textDecorationLine: 'underline' },
@@ -228,7 +228,7 @@ const styles = StyleSheet.create({
   dow: { flex: 1, textAlign: 'center', fontSize: 14, fontWeight: '800', paddingVertical: 4 },
   week: { flexDirection: 'row' },
   cell: { flex: 1, minHeight: 62, margin: 1 },
-  dayCell: { borderRadius: 8, borderWidth: 2, alignItems: 'center', paddingTop: 4 },
+  dayCell: { borderRadius: 8, borderWidth: 1, alignItems: 'center', paddingTop: 4 },
   dayNum: { fontSize: 18, fontWeight: '800', fontVariant: ['tabular-nums'] },
   todayNum: { fontWeight: '900', textDecorationLine: 'underline' },
   marks: { alignSelf: 'stretch', gap: 2, marginTop: 4, paddingHorizontal: 4 },
@@ -240,7 +240,7 @@ const styles = StyleSheet.create({
   required: { fontSize: 12, fontWeight: '900', borderWidth: 1, borderRadius: 4, paddingHorizontal: 4 },
   dateBtn: {
     minHeight: MinTap,
-    borderWidth: 2,
+    borderWidth: 1,
     borderRadius: 10,
     paddingHorizontal: Space.m,
     flexDirection: 'row',

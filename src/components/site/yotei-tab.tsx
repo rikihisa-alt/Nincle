@@ -553,7 +553,7 @@ const styles = StyleSheet.create({
   },
   banner: {
     marginTop: Space.l,
-    borderWidth: 2,
+    borderWidth: 1,
     borderRadius: 8,
     padding: Space.m,
     gap: Space.m,

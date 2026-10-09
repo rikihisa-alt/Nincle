@@ -282,7 +282,7 @@ const styles = StyleSheet.create({
   rail: { width: 100, paddingHorizontal: Space.s },
   scroll: { gap: Space.m, paddingBottom: Space.m },
   brand: { paddingHorizontal: Space.s, paddingBottom: Space.m },
-  brandName: { fontSize: 26, letterSpacing: 2 },
+  brandName: { fontSize: 24, letterSpacing: 1 },
   brandSub: { fontSize: 13, fontWeight: '700', marginTop: 2 },
   brandRail: { fontSize: 15, textAlign: 'center', paddingBottom: Space.m },
   quickWide: {

@@ -44,7 +44,7 @@ export function ConfirmHost() {
 
 const styles = StyleSheet.create({
   backdrop: { flex: 1, justifyContent: 'center', padding: Space.l },
-  box: { width: '100%', maxWidth: 480, alignSelf: 'center', borderWidth: 2, borderRadius: 16, padding: Space.xl, gap: Space.m },
+  box: { width: '100%', maxWidth: 480, alignSelf: 'center', borderWidth: 1, borderRadius: 16, padding: Space.xl, gap: Space.m },
   head: { flexDirection: 'row', alignItems: 'center', gap: Space.s },
   title: { flex: 1, fontSize: 22, fontWeight: '900' },
   message: { fontSize: 17, fontWeight: '600', lineHeight: 27, marginBottom: Space.s },

@@ -176,7 +176,7 @@ export default function AvailabilityScreen() {
 
 const styles = StyleSheet.create({
   monthBar: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginVertical: Space.l },
-  navBtn: { width: MinTap, height: MinTap, borderRadius: 12, borderWidth: 2, alignItems: 'center', justifyContent: 'center' },
+  navBtn: { width: MinTap, height: MinTap, borderRadius: 12, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
   month: { fontSize: 22, fontWeight: '900' },
   table: { paddingVertical: Space.s, marginBottom: Space.m },
   tableRow: { flexDirection: 'row' },

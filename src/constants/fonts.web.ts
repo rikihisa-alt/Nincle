@@ -1,29 +1,18 @@
 /**
- * フォント（Web）。役割の考え方は fonts.ts と同じ。
- * 日本語フォントは大きいので、Google Fonts から「画面に出る文字の分だけ」読み込む。
+ * フォント（Web）。考え方は fonts.ts と同じ（Noto Sans JP ＋ 数字だけ Inter、太さは 3 段）。
  * 読み込み中は端末のフォントで表示し、届いたら切り替わる（display=swap）。
  */
 import type { TextStyle } from 'react-native';
 
+import { tierOf } from './fonts-tier';
+
 export type FontRole = 'body' | 'heading' | 'number' | 'brand';
 
-const STACK: Record<FontRole, string> = {
-  body: "'BIZ UDPGothic', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif",
-  heading: "'M PLUS 1', 'BIZ UDPGothic', 'Hiragino Kaku Gothic ProN', sans-serif",
-  number: "Barlow, 'BIZ UDPGothic', 'Hiragino Kaku Gothic ProN', sans-serif",
-  brand: "'Dela Gothic One', 'M PLUS 1', sans-serif",
-};
-
-/** 役割ごとに、読み込んでいる太さ */
-const WEIGHTS: Record<FontRole, number[]> = {
-  body: [400, 700],
-  heading: [800, 900],
-  number: [600, 700, 800],
-  brand: [400],
-};
+const JP = "'Noto Sans JP', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif";
+const NUM = "Inter, 'Noto Sans JP', 'Hiragino Sans', sans-serif";
 
 const HREF =
-  'https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=M+PLUS+1:wght@800;900&family=Barlow:wght@600;700;800&family=Dela+Gothic+One&display=swap';
+  'https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Inter:wght@500;600&display=swap';
 
 let injected = false;
 
@@ -45,8 +34,12 @@ export function useAppFonts(): boolean {
   return true;
 }
 
+export { tierOf };
+
 export function fontFor(role: FontRole, weight: number): TextStyle {
-  const weights = WEIGHTS[role];
-  const nearest = weights.reduce((a, b) => (Math.abs(b - weight) < Math.abs(a - weight) ? b : a), weights[0]);
-  return { fontFamily: STACK[role], fontWeight: String(nearest) as TextStyle['fontWeight'] };
+  const tier = role === 'brand' ? 700 : tierOf(weight);
+  if (role === 'number') {
+    return { fontFamily: NUM, fontWeight: tier === 700 ? '600' : '500', fontVariant: ['tabular-nums'] };
+  }
+  return { fontFamily: JP, fontWeight: String(tier) as TextStyle['fontWeight'] };
 }

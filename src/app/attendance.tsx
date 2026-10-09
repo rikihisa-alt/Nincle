@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
   flex: { flex: 1 },
   mt: { marginTop: Space.m },
   monthBar: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: Space.l },
-  navBtn: { width: MinTap, height: MinTap, borderRadius: 12, borderWidth: 2, alignItems: 'center', justifyContent: 'center' },
+  navBtn: { width: MinTap, height: MinTap, borderRadius: 12, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
   month: { fontSize: 22, fontWeight: '900' },
   totals: { flexDirection: 'row', gap: Space.l },
   big: { fontSize: 40, fontWeight: '800' },

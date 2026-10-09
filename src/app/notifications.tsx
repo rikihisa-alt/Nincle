@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
   flex: { flex: 1 },
   mt: { marginTop: Space.l },
   list: { gap: Space.s, marginTop: Space.l },
-  item: { minHeight: MinTap + 16, flexDirection: 'row', alignItems: 'center', gap: Space.m, borderWidth: 2, borderRadius: 10, padding: Space.m },
+  item: { minHeight: MinTap + 16, flexDirection: 'row', alignItems: 'center', gap: Space.m, borderWidth: 1, borderRadius: 10, padding: Space.m },
   itemTitle: { fontSize: 17, fontWeight: '900' },
   itemBody: { fontSize: 15, fontWeight: '600', marginTop: 2, lineHeight: 22 },
   time: { fontSize: 13, fontWeight: '700', marginTop: 4 },
