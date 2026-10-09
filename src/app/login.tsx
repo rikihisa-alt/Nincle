@@ -53,7 +53,9 @@ export default function LoginScreen() {
   return (
     <Screen size="narrow">
       <View style={styles.brand}>
-        <T style={styles.logo}>ニンクル</T>
+        <T font="brand" style={styles.logo}>
+          ニンクル
+        </T>
         <T tone="textSub" style={styles.tagline}>
           現場の段取りと人工を、仲間で共有
         </T>

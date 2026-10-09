@@ -1,6 +1,7 @@
 import { Pressable, StyleSheet, Switch, TextInput, View, type TextInputProps } from 'react-native';
 
 import { T } from '@/components/ui';
+import { fontFor } from '@/constants/fonts';
 import { MinTap, Space, useColors } from '@/constants/theme';
 import { usePrefs } from '@/providers/prefs';
 
@@ -29,6 +30,7 @@ export function Field({
         style={[
           styles.input,
           { color: c.text, backgroundColor: c.card, borderColor: c.border, fontSize: 19 * scale },
+          fontFor('body', 400),
           props.multiline && styles.multiline,
           props.style,
         ]}
@@ -73,7 +75,7 @@ export function MoneyField({
           placeholder={placeholder}
           placeholderTextColor={c.textSub}
           maxFontSizeMultiplier={1.6}
-          style={[styles.moneyInput, { color: c.text, fontSize: 22 * scale }]}
+          style={[styles.moneyInput, fontFor('number', 700), { color: c.text, fontSize: 22 * scale }]}
         />
         <T tone="textSub" style={styles.yen}>
           円
@@ -199,7 +201,7 @@ export function ToggleRow({
         value={value}
         onValueChange={onChange}
         trackColor={{ true: c.accent, false: c.barTrack }}
-        thumbColor={value ? c.onAccent : c.card}
+        thumbColor={value ? c.onAccent : c.solid}
         style={styles.switch}
       />
     </View>
@@ -224,10 +226,10 @@ const styles = StyleSheet.create({
   labelRow: { flexDirection: 'row', alignItems: 'center', gap: Space.s },
   label: { fontSize: 16, fontWeight: '800' },
   required: { fontSize: 12, fontWeight: '900', borderWidth: 1, borderRadius: 4, paddingHorizontal: 4 },
-  input: { minHeight: MinTap, borderWidth: 2, borderRadius: 10, paddingHorizontal: Space.m },
+  input: { minHeight: MinTap, borderWidth: 2, borderRadius: 12, paddingHorizontal: 16 },
   multiline: { minHeight: 110, paddingTop: Space.m, textAlignVertical: 'top' },
   hint: { fontSize: 14, fontWeight: '600', lineHeight: 20 },
-  moneyRow: { flexDirection: 'row', alignItems: 'center', borderWidth: 2, borderRadius: 10, paddingHorizontal: Space.m },
+  moneyRow: { flexDirection: 'row', alignItems: 'center', borderWidth: 2, borderRadius: 12, paddingHorizontal: 16 },
   moneyInput: { flex: 1, minHeight: MinTap, fontWeight: '800', fontVariant: ['tabular-nums'] },
   yen: { fontSize: 18, fontWeight: '800' },
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: Space.s, marginTop: Space.xs },
@@ -247,24 +249,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: Space.m,
     borderWidth: 2,
-    borderRadius: 10,
-    paddingHorizontal: Space.m,
-    paddingVertical: Space.s,
+    borderRadius: 12,
+    paddingHorizontal: 16,
+    paddingVertical: 10,
   },
   box: { width: 30, height: 30, borderRadius: 6, borderWidth: 2, alignItems: 'center', justifyContent: 'center' },
   boxMark: { fontSize: 20, fontWeight: '900', lineHeight: 24 },
   checkLabel: { fontSize: 18, fontWeight: '800' },
   checkSub: { fontSize: 14, fontWeight: '600', marginTop: 2 },
   toggleRow: {
-    minHeight: MinTap + 8,
+    minHeight: MinTap + 12,
     flexDirection: 'row',
     alignItems: 'center',
     gap: Space.m,
-    paddingHorizontal: Space.l,
-    paddingVertical: Space.s,
+    paddingHorizontal: 22,
+    paddingVertical: 14,
   },
   toggleLabel: { fontSize: 17, fontWeight: '700' },
   switch: { transform: [{ scale: 1.15 }] },
-  error: { borderWidth: 2, borderRadius: 8, padding: Space.m, marginTop: Space.l },
+  error: { borderWidth: 2, borderRadius: 12, padding: 16, marginTop: Space.l },
   errorText: { fontSize: 16, fontWeight: '800' },
 });

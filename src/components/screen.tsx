@@ -43,7 +43,7 @@ export function Screen({
     : undefined;
 
   return (
-    <SafeAreaView edges={header ? [] : edges} style={[styles.root, { backgroundColor: c.bg }]}>
+    <SafeAreaView edges={header ? [] : edges} style={styles.root}>
       {header}
       <KeyboardAvoidingView style={styles.root} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
         {scroll ? (

@@ -94,7 +94,7 @@ export default function HomeScreen() {
         <T tone="textSub" style={styles.appName}>
           現場ボード{profile ? `　${profile.display_name}さん` : ''}
         </T>
-        <FitText style={styles.date} accessibilityRole="header">
+        <FitText style={styles.date} accessibilityRole="header" font="heading">
           {formatLong(today)}
         </FitText>
       </View>

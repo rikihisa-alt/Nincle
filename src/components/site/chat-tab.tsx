@@ -5,6 +5,7 @@ import { Modal, Platform, Pressable, ScrollView, StyleSheet, TextInput, View } f
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Avatar, BigButton, Icon, Icons, LoadingView, T } from '@/components/ui';
+import { fontFor } from '@/constants/fonts';
 import { MinTap, Space, useColors } from '@/constants/theme';
 import type { PhotoInput, SiteDetail } from '@/data/api';
 import { api } from '@/data/client';
@@ -200,7 +201,7 @@ function Composer({ siteId }: { siteId: string }) {
           multiline
           accessibilityLabel="書き込む内容"
           maxFontSizeMultiplier={1.6}
-          style={[styles.input, { color: c.text, backgroundColor: c.card, borderColor: c.border, fontSize: 18 * scale }]}
+          style={[styles.input, fontFor('body', 400), { color: c.text, backgroundColor: c.card, borderColor: c.border, fontSize: 18 * scale }]}
         />
         <Pressable
           accessibilityRole="button"

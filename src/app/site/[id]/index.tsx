@@ -95,7 +95,7 @@ export default function SiteDetailScreen() {
 
   if (isWide) {
     return (
-      <View style={[styles.flex, { backgroundColor: c.bg }]}>
+      <View style={styles.flex}>
         {header}
         <View style={styles.split}>
           <ScrollView style={styles.flex} contentContainerStyle={styles.leftPane} keyboardShouldPersistTaps="handled">

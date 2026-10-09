@@ -17,6 +17,7 @@ import {
   Tanzaku,
   dueColor,
 } from '@/components/ui';
+import { fontFor } from '@/constants/fonts';
 import { MinTap, Space, useColors } from '@/constants/theme';
 import type { SiteListItem } from '@/data/api';
 import { useMySites } from '@/data/queries';
@@ -73,7 +74,7 @@ export default function SitesScreen() {
             placeholderTextColor={c.textSub}
             accessibilityLabel="現場をさがす"
             maxFontSizeMultiplier={1.6}
-            style={[styles.searchInput, { color: c.text, fontSize: 17 * scale }]}
+            style={[styles.searchInput, fontFor('body', 400), { color: c.text, fontSize: 17 * scale }]}
           />
         </View>
       )}

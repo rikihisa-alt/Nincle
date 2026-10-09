@@ -24,7 +24,7 @@ export function ConfirmHost() {
     <Modal visible={Boolean(req)} transparent animationType="fade" onRequestClose={() => close(false)}>
       <View style={[styles.backdrop, { backgroundColor: c.overlay }]}>
         <View
-          style={[styles.box, { backgroundColor: c.card, borderColor: c.text }]}
+          style={[styles.box, { backgroundColor: c.solid, borderColor: c.text }]}
           accessibilityViewIsModal
           accessibilityRole="alert">
           <View style={styles.head}>

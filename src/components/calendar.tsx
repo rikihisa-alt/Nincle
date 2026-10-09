@@ -107,6 +107,7 @@ export function MonthCalendar({
                   pressed && { opacity: 0.6 },
                 ]}>
                 <T
+                  font="number"
                   style={[
                     styles.dayNum,
                     { color: isSel ? c.onAccent : i === 0 ? c.statusOver : i === 6 ? c.info : c.text },

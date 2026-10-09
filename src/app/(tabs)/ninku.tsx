@@ -425,7 +425,7 @@ export default function NinkuScreen() {
           <Icon name={Icons.chevronLeft} size={26} color={c.text} />
         </Pressable>
         <View style={styles.periodCenter} accessible accessibilityLabel={`${period.label}、${formatShort(period.start)}から${formatShort(period.end)}`}>
-          <FitText style={styles.periodLabel} align="center">
+          <FitText style={styles.periodLabel} align="center" font="heading">
             {period.label}
           </FitText>
           <FitText tone="textSub" style={styles.periodRange} align="center">

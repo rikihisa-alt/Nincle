@@ -13,6 +13,7 @@ import {
   type ViewStyle,
 } from 'react-native';
 
+import { fontFor, type FontRole } from '@/constants/fonts';
 import { MinTap, Space, useColors, type Colors } from '@/constants/theme';
 import type { DueState } from '@/lib/date';
 import { usePrefs } from '@/providers/prefs';
@@ -82,25 +83,43 @@ export const Icons = {
  * 空白・句読点・括弧のところで折り返し、それでも入らない長い文だけ途中で折る。
  * iOS・Android は OS が日本語の言葉の切れ目で折り返す。
  */
+/** クリアパネル：半透明の上に、Web では後ろをぼかす。影は薄く */
+const GLASS = (Platform.OS === 'web'
+  ? { backdropFilter: 'blur(14px) saturate(140%)', WebkitBackdropFilter: 'blur(14px) saturate(140%)' }
+  : {}) as ViewStyle;
+
 const WEB_KEEP_WORDS = (Platform.OS === 'web' ? { wordBreak: 'keep-all', overflowWrap: 'anywhere' } : {}) as TextStyle;
 
 /**
  * 文字はすべてこれで出す。アプリの「文字の大きさ」設定を掛け、端末の設定にも追従する
  * （ただし画面が崩れないよう、端末側の拡大は 1.6 倍で止める）。
  */
-export function T({ style, tone = 'text', ...props }: TextProps & { tone?: keyof Colors }) {
+export function T({ style, tone = 'text', font, ...props }: TextProps & { tone?: keyof Colors; font?: FontRole }) {
   const c = useColors();
   const { scale } = usePrefs();
   const flat = StyleSheet.flatten([styles.baseText, { color: c[tone] }, style]) as TextStyle;
-  const scaled: TextStyle =
-    scale === 1
-      ? flat
-      : {
-          ...flat,
-          fontSize: (flat.fontSize ?? 16) * scale,
-          lineHeight: flat.lineHeight ? flat.lineHeight * scale : undefined,
-        };
+  const role = font ?? autoRole(flat);
+  const size = (flat.fontSize ?? 16) * scale;
+  const scaled: TextStyle = {
+    ...flat,
+    ...fontFor(role, weightOf(flat)),
+    fontSize: size,
+    // 日本語は行間を広めに（見出しは詰める）。指定があればそれを使う
+    lineHeight: flat.lineHeight ? flat.lineHeight * scale : Math.round(size * (role === 'body' ? 1.45 : 1.25)),
+  };
   return <Text maxFontSizeMultiplier={1.6} {...props} style={[scaled, WEB_KEEP_WORDS]} />;
+}
+
+export function weightOf(style: TextStyle): number {
+  const w = style.fontWeight;
+  if (w === 'bold') return 700;
+  if (w === undefined || w === 'normal') return 400;
+  return Number(w) || 400;
+}
+
+/** 大きく太い文字（画面の見出し・現場名など）は見出し用の書体、それ以外は本文用 */
+function autoRole(style: TextStyle): FontRole {
+  return (style.fontSize ?? 16) >= 20 && weightOf(style) >= 800 ? 'heading' : 'body';
 }
 
 /** 文字の幅の目安（1文字＝1em）。太字の数字は思ったより広いので、はみ出さないよう広めに見積もる */
@@ -124,9 +143,12 @@ export function FitText({
   tone = 'text',
   align = 'left',
   boxStyle,
+  font = 'number',
   ...props
 }: Omit<TextProps, 'children'> & {
   children: string | number;
+  /** 既定は数字用の書体。日付の見出しなどは heading */
+  font?: FontRole;
   tone?: keyof Colors;
   align?: 'left' | 'right' | 'center';
   /** 横並びの中で使うときは、幅（flex: 1 や width）をここで決める */
@@ -149,6 +171,7 @@ export function FitText({
         {...props}
         style={[
           flat,
+          fontFor(font, weightOf(flat)),
           styles.fitText,
           { fontSize: size, lineHeight, textAlign: align },
         ]}>
@@ -162,7 +185,7 @@ export function FitText({
 export function SectionLabel({ children, right }: { children: string; right?: ReactNode }) {
   return (
     <View style={styles.sectionRow}>
-      <T tone="textSub" accessibilityRole="header" style={styles.sectionLabel}>
+      <T tone="textSub" accessibilityRole="header" font="heading" style={styles.sectionLabel}>
         {children}
       </T>
       {right}
@@ -186,7 +209,7 @@ export function Tanzaku({
 }) {
   const c = useColors();
   const body = (
-    <View style={[styles.tanzaku, { backgroundColor: c.card, borderColor: c.border }, style]}>
+    <View style={[styles.tanzaku, GLASS, { backgroundColor: c.card, borderColor: c.border }, style]}>
       <View style={[styles.stripe, { backgroundColor: stripe ?? c.statusActive }]} />
       <View style={styles.tanzakuBody}>{children}</View>
     </View>
@@ -206,7 +229,7 @@ export function Tanzaku({
 /** 枠だけのカード */
 export function Card({ children, style }: { children: ReactNode; style?: StyleProp<ViewStyle> }) {
   const c = useColors();
-  return <View style={[styles.card, { backgroundColor: c.card, borderColor: c.border }, style]}>{children}</View>;
+  return <View style={[styles.card, GLASS, { backgroundColor: c.card, borderColor: c.border }, style]}>{children}</View>;
 }
 
 export function dueColor(c: Colors, state: DueState) {
@@ -530,10 +553,10 @@ export const styles = StyleSheet.create({
     marginBottom: Space.s,
   },
   sectionLabel: { fontSize: 15, fontWeight: '800', letterSpacing: 1.5 },
-  tanzaku: { flexDirection: 'row', borderWidth: 1, borderRadius: 8, overflow: 'hidden' },
-  stripe: { width: 8 },
-  tanzakuBody: { flex: 1, padding: Space.l, gap: Space.s },
-  card: { borderWidth: 1, borderRadius: 8, overflow: 'hidden' },
+  tanzaku: { flexDirection: 'row', borderWidth: 1, borderRadius: 14, overflow: 'hidden', boxShadow: '0 2px 12px rgba(0,0,0,0.06)' },
+  stripe: { width: 7 },
+  tanzakuBody: { flex: 1, paddingHorizontal: 22, paddingVertical: 20, gap: 10 },
+  card: { borderWidth: 1, borderRadius: 14, overflow: 'hidden', boxShadow: '0 2px 12px rgba(0,0,0,0.06)' },
   badge: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -549,23 +572,23 @@ export const styles = StyleSheet.create({
   countText: { color: '#FFFFFF', fontSize: 13, fontWeight: '900' },
   button: {
     minHeight: MinTap,
-    borderRadius: 10,
+    borderRadius: 12,
     borderWidth: 2,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     gap: Space.s,
-    paddingHorizontal: Space.l,
+    paddingHorizontal: 20,
     paddingVertical: Space.s,
   },
   buttonCompact: { minHeight: 48, paddingHorizontal: Space.m },
   buttonText: { fontSize: 18, fontWeight: '800', textAlign: 'center', flexShrink: 1 },
   buttonTextCompact: { fontSize: 16 },
-  segment: { flexDirection: 'row', borderWidth: 1, borderRadius: 10, padding: 3, gap: 3 },
+  segment: { flexDirection: 'row', borderWidth: 1, borderRadius: 14, padding: 4, gap: 4 },
   segmentItem: {
     flex: 1,
     minHeight: 50,
-    borderRadius: 8,
+    borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
@@ -576,12 +599,12 @@ export const styles = StyleSheet.create({
   barTrack: { height: 12, borderRadius: 2, overflow: 'hidden' },
   barFill: { height: '100%' },
   listRow: {
-    minHeight: MinTap + 8,
+    minHeight: MinTap + 12,
     flexDirection: 'row',
     alignItems: 'center',
     gap: Space.m,
-    paddingHorizontal: Space.l,
-    paddingVertical: Space.m,
+    paddingHorizontal: 22,
+    paddingVertical: 16,
   },
   listTitle: { fontSize: 18, fontWeight: '800' },
   listSub: { fontSize: 14, fontWeight: '600', marginTop: 2 },
@@ -594,14 +617,14 @@ export const styles = StyleSheet.create({
   stepNumBox: { width: 60, alignSelf: 'auto' },
   stepNum: { fontSize: 26, fontWeight: '900', fontVariant: ['tabular-nums'] },
   stepUnit: { fontSize: 15, fontWeight: '700' },
-  empty: { borderWidth: 2, borderStyle: 'dashed', borderRadius: 10, padding: Space.l, gap: Space.s, alignItems: 'stretch' },
+  empty: { borderWidth: 2, borderStyle: 'dashed', borderRadius: 14, paddingHorizontal: 22, paddingVertical: 20, gap: 10, alignItems: 'stretch' },
   emptyTitle: { fontSize: 18, fontWeight: '800' },
   emptyBody: { fontSize: 15, fontWeight: '600', lineHeight: 22 },
   loading: { paddingVertical: Space.xl * 2, alignItems: 'center', gap: Space.m },
   loadingText: { fontSize: 16, fontWeight: '700' },
-  errorBox: { borderWidth: 2, borderRadius: 8, padding: Space.m, gap: Space.m, marginTop: Space.l },
+  errorBox: { borderWidth: 2, borderRadius: 14, padding: 18, gap: Space.m, marginTop: Space.l },
   errorText: { flex: 1, fontSize: 16, fontWeight: '800' },
-  hint: { flexDirection: 'row', gap: Space.s, borderWidth: 1, borderRadius: 8, padding: Space.m, alignItems: 'flex-start' },
+  hint: { flexDirection: 'row', gap: 10, borderWidth: 1, borderRadius: 14, paddingHorizontal: 18, paddingVertical: 16, alignItems: 'flex-start' },
   hintText: { flex: 1, fontSize: 15, fontWeight: '600', lineHeight: 22 },
   pressed: { opacity: 0.7 },
 });

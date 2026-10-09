@@ -3,7 +3,8 @@ import { useColorScheme } from 'react-native';
 import { usePrefs } from '@/providers/prefs';
 
 /**
- * 「現場の黒板と工程表」配色。
+ * 「現場の黒板と工程表」配色。パネルは背景が透ける「クリアパネル」（半透明＋Web はぼかし）。
+ * 背景にはコンクリート調の薄いグラデーション（bgGradient）を敷き、透け感が分かるようにしている。
  * 地色はコンクリート寄りのグレー、アクセントは安全色（イエロー・オレンジ）。
  * 状態色は 進行中＝グレー／納期間近＝オレンジ／超過＝赤 の3つだけ。
  * 主要文字は地色に対して 7:1 以上を目標にしている。
@@ -11,9 +12,12 @@ import { usePrefs } from '@/providers/prefs';
 export const Palette = {
   light: {
     bg: '#D6D3CC',
-    card: '#F3F1EC',
-    cardAlt: '#E6E3DC',
-    border: '#9E998F',
+    bgGradient: ['#E6E3DC', '#D3CFC6', '#C9C3B7'],
+    card: 'rgba(255,255,255,0.58)',
+    cardAlt: 'rgba(255,255,255,0.34)',
+    border: 'rgba(58,54,46,0.30)',
+    /** 透けないパネル（ダイアログなど） */
+    solid: '#F3F1EC',
     text: '#141414',
     textSub: '#3A3833',
     accent: '#F5C400',
@@ -35,9 +39,11 @@ export const Palette = {
   },
   dark: {
     bg: '#161615',
-    card: '#262623',
-    cardAlt: '#31302C',
-    border: '#5C5A54',
+    bgGradient: ['#22211E', '#161615', '#1B1915'],
+    card: 'rgba(255,255,255,0.07)',
+    cardAlt: 'rgba(255,255,255,0.12)',
+    border: 'rgba(255,255,255,0.20)',
+    solid: '#262623',
     text: '#F5F3EE',
     textSub: '#CBC7BE',
     accent: '#FFD21F',
@@ -59,7 +65,8 @@ export const Palette = {
   },
 } as const;
 
-export type Colors = { [K in keyof typeof Palette.light]: string };
+type Light = typeof Palette.light;
+export type Colors = { [K in Exclude<keyof Light, 'bgGradient'>]: string } & { bgGradient: readonly [string, string, string] };
 
 export function useIsDark(): boolean {
   const scheme = useColorScheme();
