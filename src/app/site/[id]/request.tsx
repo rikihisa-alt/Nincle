@@ -18,13 +18,14 @@ const NOTES = ['入れる人おる？', '応援お願いします', '雨なら�
 
 /** 予定の確認を出す：日にちと集合時間を決めて、メンバーに「入れる？」と聞く */
 export default function NewRequestScreen() {
-  const { id } = useLocalSearchParams<{ id: string }>();
+  const { id, date } = useLocalSearchParams<{ id: string; date?: string }>();
   const c = useColors();
   const { userId } = useMe();
   const { data: detail } = useSite(id);
   const today = todayJst();
   const [mode, setMode] = useState<'single' | 'range'>('single');
-  const [from, setFrom] = useState<string | null>(addDays(today, 1));
+  // 仲間の空きから来たときは、選んだ日にちを入れておく
+  const [from, setFrom] = useState<string | null>(date && date >= today ? date : addDays(today, 1));
   const [to, setTo] = useState<string | null>(addDays(today, 2));
   const [time, setTime] = useState<string | null>('8:00');
   const [note, setNote] = useState('');

@@ -2,6 +2,7 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 
+import { Backdrop } from '@/components/backdrop';
 import { BackHeader } from '@/components/header';
 import { Screen } from '@/components/screen';
 import { ChatTab } from '@/components/site/chat-tab';
@@ -95,7 +96,8 @@ export default function SiteDetailScreen() {
 
   if (isWide) {
     return (
-      <View style={styles.flex}>
+      <View style={[styles.flex, { backgroundColor: c.bg }]}>
+        <Backdrop />
         {header}
         <View style={styles.split}>
           <ScrollView style={styles.flex} contentContainerStyle={styles.leftPane} keyboardShouldPersistTaps="handled">

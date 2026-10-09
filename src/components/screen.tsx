@@ -2,6 +2,7 @@ import { useState, type ReactNode } from 'react';
 import { KeyboardAvoidingView, Platform, RefreshControl, ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { Backdrop } from '@/components/backdrop';
 import { Space, useColors } from '@/constants/theme';
 import { contentMaxWidth, useLayout } from '@/lib/layout';
 
@@ -43,7 +44,8 @@ export function Screen({
     : undefined;
 
   return (
-    <SafeAreaView edges={header ? [] : edges} style={styles.root}>
+    <SafeAreaView edges={header ? [] : edges} style={[styles.root, { backgroundColor: c.bg }]}>
+      <Backdrop />
       {header}
       <KeyboardAvoidingView style={styles.root} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
         {scroll ? (

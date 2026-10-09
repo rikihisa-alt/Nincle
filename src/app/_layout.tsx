@@ -1,6 +1,5 @@
 import { focusManager, QueryClient, QueryClientProvider, useQueryClient } from '@tanstack/react-query';
 import * as Notifications from 'expo-notifications';
-import { LinearGradient } from 'expo-linear-gradient';
 import { DarkTheme, DefaultTheme, router, Stack, ThemeProvider } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
@@ -53,7 +52,7 @@ function ThemedStatusBar() {
   return <StatusBar style={useIsDark() ? 'light' : 'dark'} />;
 }
 
-/** 画面切り替えの背景を透明にして、下のグラデーションとクリアパネルを見せる */
+/** 画面切り替えの下地。各画面は components/backdrop.tsx で自分の背景を塗る（前の画面が透けないように不透明） */
 function NavTheme({ children }: { children: ReactNode }) {
   const dark = useIsDark();
   const c = useColors();
@@ -62,7 +61,7 @@ function NavTheme({ children }: { children: ReactNode }) {
     <ThemeProvider
       value={{
         ...base,
-        colors: { ...base.colors, background: 'transparent', card: c.tabBar, text: c.text, border: c.border, primary: c.accent },
+        colors: { ...base.colors, background: c.bg, card: c.tabBar, text: c.text, border: c.border, primary: c.accent },
       }}>
       {children}
     </ThemeProvider>
@@ -94,20 +93,13 @@ function RootStack() {
 
   return (
     <View style={styles.app}>
-      {/* コンクリート調の薄いグラデーション。パネルはこの上に半透明で重なる */}
-      <LinearGradient
-        colors={c.bgGradient}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={StyleSheet.absoluteFill}
-      />
       {ready && userId && <BackgroundTasks userId={userId} />}
       {ready && mode !== 'phone' && <SideNav variant={mode === 'desktop' ? 'sidebar' : 'rail'} />}
       <View style={styles.main}>
         <Stack
           screenOptions={{
             headerShown: false,
-            contentStyle: { backgroundColor: 'transparent' },
+            contentStyle: { backgroundColor: c.bg },
           }}>
           <Stack.Protected guard={ready}>
             <Stack.Screen name="(tabs)" />
@@ -123,6 +115,9 @@ function RootStack() {
             <Stack.Screen name="team/[id]" />
             <Stack.Screen name="profile-edit" />
             <Stack.Screen name="help" />
+            <Stack.Screen name="calendar" />
+            <Stack.Screen name="attendance" />
+            <Stack.Screen name="availability" />
           </Stack.Protected>
           <Stack.Protected guard={isSupabaseConfigured && !signedIn}>
             <Stack.Screen name="login" />

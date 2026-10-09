@@ -134,6 +134,9 @@ export default function SettingsScreen() {
       <SectionLabel>チーム</SectionLabel>
       <Card>
         <ListRow first title="仲間の名簿・招待" sub="チームを作る・招待リンクを送る・締め日" onPress={() => router.push('/team')} />
+        <ListRow title="カレンダー" sub="自分の予定を月で見る" onPress={() => router.push('/calendar')} />
+        <ListRow title="出面の記録" sub="自分が入れた出面を月ごとに見る・CSV" onPress={() => router.push('/attendance')} />
+        <ListRow title="仲間の空き" sub="チームの人の予定が入っている日を表で見る" onPress={() => router.push('/availability')} />
         <ListRow title="使い方" sub="はじめての方へ・よくある質問" onPress={() => router.push('/help')} />
         <ListRow title="お問い合わせ" sub={CONTACT} onPress={() => Linking.openURL(`mailto:${CONTACT}?subject=${encodeURIComponent('ニンクルについて')}`)} />
       </Card>

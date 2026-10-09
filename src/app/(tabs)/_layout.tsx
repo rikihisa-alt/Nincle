@@ -32,7 +32,7 @@ export default function TabLayout() {
       screenOptions={{
         headerShown: false,
         tabBarPosition: 'bottom',
-        sceneStyle: { backgroundColor: 'transparent' },
+        sceneStyle: { backgroundColor: c.bg },
         tabBarActiveTintColor: c.tabActive,
         tabBarInactiveTintColor: c.tabText,
         tabBarStyle: { backgroundColor: c.tabBar, borderTopWidth: 0, minHeight: MinTap + 20 },
